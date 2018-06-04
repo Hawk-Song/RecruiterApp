@@ -3,6 +3,7 @@ const utils = require('utility')
 const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
+const _filter = {'pwd':0, '__v':0}
 
 Router.get('/list', function(req, res){
   //remove all pwd
@@ -15,10 +16,12 @@ Router.get('/list', function(req, res){
 Router.post('/login', function(req, res){
   const {user, pwd} = req.body
   //so that pwd will present as zero
-  User.findOne({user, pwd:md5Pwd(pwd)}, {'pwd':0}, function(err, doc){
+  User.findOne({user, pwd:md5Pwd(pwd)}, _filter, function(err, doc){
     if(!doc) {
       return res.json({code:1, msg:'user or password is wrong'})
     }
+    //set up cookie
+    res.cookie('userid', doc._id)
     return res.json({code:0, data:doc})
   })
 })
@@ -30,16 +33,40 @@ Router.post('/register', function(req,res){
     if(doc){
       return res.json({code:1, msg:'duplicate username'})
     }
-    User.create({user,type, pwd:md5Pwd(pwd)}, function(err, data){
+    //use create we cannot get user_id, so use a different method
+    // User.create({user,type, pwd:md5Pwd(pwd)}, function(err, data){
+    //   if(err){
+    //     return res.json({code:1, msg:'something wrong in the backend'})
+    //   }
+    //   return res.json({code:0})
+    // })
+    const userModel = new User({user, type, pwd:md5Pwd(pwd)})
+    userModel.save(function(e, d){
       if(err){
         return res.json({code:1, msg:'something wrong in the backend'})
       }
-      return res.json({code:0})
+      const {user, type, _id} = d
+      res.cookie('userid', _id)
+      return res.json({code:0, data:{user, type, _id}})
     })
   })
 })
+
 Router.get('/info', function(req, res){
-  return res.json({code:1})
+  //get cookie first
+  const {userid} = req.cookies
+  if(!userid){
+    return res.json({code:1})
+  }
+  User.findOne({_id:userid}, _filter, function(err, doc){
+    if (err){
+      return res.json({code:1, msg:'something wrong in the backend'})
+    }
+    if(doc){
+      return res.json({code:0, data:doc})
+    }
+  })
+  
 })
 
 function md5Pwd(pwd){
