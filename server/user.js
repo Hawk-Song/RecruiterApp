@@ -8,9 +8,10 @@ Router.get('/list', function(req, res){
     return res.json(doc)
   })
 })
+
 Router.post('/register', function(req,res){
-  console.log(req.body.data)
-  const {user, pwd, type} = req.body.data
+  console.log(req.body)
+  const {user, pwd, type} = req.body
   User.findOne({user:user}, function(err, doc){
     if(doc){
       return res.json({code:1, msg:'duplicate username'})
