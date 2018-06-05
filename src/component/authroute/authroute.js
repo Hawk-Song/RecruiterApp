@@ -18,20 +18,18 @@ class AuthRoute extends React.Component{
       return null
     }
     //get user information
-    axios.get('/user/info').
-    then(res=>{
+    axios.get('/user/info')
+    .then(res=>{
       if (res.status===200){
         if(res.data.code===0){
           //if user loged in
           this.props.loadData(res.data.data)
-          console.log(this.props.loadData)
         }else{
           //AuthRouter is not Router component,
           //so if want use history, decorate it with withRouter
           //if not at login or register, and user have not login in, route to login page         
           this.props.history.push('/login')
         }
-        console.log(res.data)
       }
     })
     //is logined,
