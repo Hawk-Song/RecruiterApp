@@ -1,21 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getUserList} from '../../redux/charuser.redux'
-// becuse UserCard is exported defaultly, so do not need curly bracket
 import UserCard from '../usercard/usercard'
 
 @connect(
   state=>state.chatuser,
   {getUserList}
 )
-class Boss extends React.Component {
+class Genius extends React.Component {
 
   componentDidMount(){
-    this.props.getUserList('genius')
+    this.props.getUserList('boss')
   }
 
   render(){
     return <UserCard userList={this.props.userList}></UserCard>
   }
 }
-export default Boss
+export default Genius
