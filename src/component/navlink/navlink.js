@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {TabBar} from 'antd-mobile'
 //if you want use location, must import this
 import {withRouter} from 'react-router-dom'
-
+//navLinkBar is not route component, so we need withRouter
 @withRouter
 class NavLinkBar extends React.Component {
   static propTypes = {

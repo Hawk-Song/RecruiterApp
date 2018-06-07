@@ -8,6 +8,8 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  /*do not forgot to set height as auto, or navLinkBar will make button unclickable*/
+  height:auto;
 }
 
 .fixd-header.am-navbar{

@@ -1,11 +1,31 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Result, List, WhiteSpace} from 'antd-mobile'
+import {Result, List, WhiteSpace, Modal} from 'antd-mobile'
+import browserCookie from 'browser-cookies'
 
 @connect(
   state=>state.user
 )
 class User extends React.Component{
+
+  constructor(props){
+    super(props)
+    this.logout = this.logout.bind(this)
+  }
+
+  logout(){
+    const alert = Modal.alert
+    alert('Logout', 'Are you sure???', [
+        { text: 'Cancel', onPress: () => console.log('cancel') },
+        { text: 'Ok', onPress: () => {
+          browserCookie.erase('userid')
+          //force to reload page
+          window.location.href = window.location.href
+        } },
+      ])
+
+    }
+  
 
   render(){
     const props = this.props
@@ -14,7 +34,7 @@ class User extends React.Component{
     return props.user?(
       <div>
         <Result
-          img={<img src={require(`../img/${this.props.avatar}.png`)} style={{width:70}}/>}
+          img={<img src={require(`../img/${this.props.avatar}.png`)} alt='' style={{width:70}}/>}
           title={this.props.user}
           message={props.type==='boss'?props.company:null}
         />
@@ -27,7 +47,7 @@ class User extends React.Component{
         </List>
         <WhiteSpace></WhiteSpace>
         <List>
-          <Item>Logout</Item>
+          <Item onClick={this.logout}>Logout</Item>
         </List>
       </div>
     ):null
