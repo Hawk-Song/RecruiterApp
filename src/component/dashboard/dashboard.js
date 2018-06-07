@@ -5,14 +5,13 @@ import {Switch, Route} from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
 import Boss from '../../component/boss/boss'
 import Genius from '../../component/genius/genius'
+import User from '../../component/user/user'
 
 
 function Msg(){
   return <h2>Message</h2>
 }
-function User(){
-  return <h2>user center</h2>
-}
+
 
 @connect(
   state=>state
