@@ -8,7 +8,12 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 io.on('connection', function(socket){
-  console.log('use login')
+  // console.log('use login')
+  socket.on('sendmsg',function(data){
+    console.log(data)
+    //send to global
+    io.emit('recvmsg', data)
+  })
 })
 
 app.use(cookieParser())
