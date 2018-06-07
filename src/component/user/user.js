@@ -2,9 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Result, List, WhiteSpace, Modal} from 'antd-mobile'
 import browserCookie from 'browser-cookies'
+import {logoutSubmit} from '../../redux/user.redux'
+import {Redirect} from 'react-router-dom'
 
 @connect(
-  state=>state.user
+  state=>state.user,
+  {logoutSubmit}
 )
 class User extends React.Component{
 
@@ -20,7 +23,9 @@ class User extends React.Component{
         { text: 'Ok', onPress: () => {
           browserCookie.erase('userid')
           //force to reload page
-          window.location.href = window.location.href
+          // window.location.href = window.location.href
+          //remove data in redux
+          this.props.logoutSubmit()
         } },
       ])
 
@@ -50,7 +55,7 @@ class User extends React.Component{
           <Item onClick={this.logout}>Logout</Item>
         </List>
       </div>
-    ):null
+    ):<Redirect to={this.props.redirectTo}/>
   }
 }
 
