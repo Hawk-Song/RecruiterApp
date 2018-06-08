@@ -3,7 +3,7 @@ import {List, InputItem, NavBar} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux'
 import io from 'socket.io-client'
-const socket = io('ws://localhost:9093')
+//const socket = io('ws://localhost:9093')
 
 @connect(
   state=>state,
@@ -15,8 +15,8 @@ class Chat extends React.Component{
     this.state = {text:'', msg:[]}
   }
   componentDidMount(){
-    this.props.getMsgList()
-    this.props.recvMsg()
+    // this.props.getMsgList()
+    // this.props.recvMsg()
     // socket.on('recvmsg', (data)=>{
     //   this.setState({
     //     msg:[...this.state.msg, data.text]
@@ -66,7 +66,7 @@ class Chat extends React.Component{
                 this.setState({text:v})
               }}
               extra={<span onClick={()=>this.handleSubmit()}>send</span>}
-            >x
+            >
             </InputItem>
           </List>
         </div>
