@@ -38,9 +38,9 @@ class Register extends React.Component {
         <h2>Register Page</h2>
         <List>
             {this.props.msg?<p className='error-msg'>{this.props.msg}</p>:null}
-            <InputItem onChange={v=>this.handleChange('user', v)}>Username</InputItem>
-            <InputItem onChange={v=>this.handleChange('pwd', v)}>Password</InputItem>
-            <InputItem onChange={v=>this.handleChange('repeatpwd', v)}>Cfm Pwd</InputItem>
+            <InputItem onChange={v=>this.handleChange('user', v)} placeholder='Username'></InputItem>
+            <InputItem onChange={v=>this.handleChange('pwd', v)} placeholder='Password'></InputItem>
+            <InputItem onChange={v=>this.handleChange('repeatpwd', v)} placeholder='Comfirm password'></InputItem>
             <RadioItem checked={this.state.type==='genius'}
               onChange={()=>this.handleChange('type', 'genius')}
             >Genuis</RadioItem>

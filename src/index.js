@@ -31,7 +31,7 @@ ReactDOM.render(
           <Route path='/geniusinfo' component={GeniusInfo}></Route>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
-          <Route path='/char/:user' component={Chat}></Route>
+          <Route path='/chat/:user' component={Chat}></Route>
           <Route component={Dashboard}></Route>
         </Switch>
       </div>
