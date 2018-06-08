@@ -29,6 +29,7 @@ class Chat extends React.Component{
       this.props.recvMsg()
     }
   }
+  
   handleSubmit(){
     //socket.emit('sendmsg', {text:this.state.text})
     this.setState({text:''})
@@ -40,6 +41,7 @@ class Chat extends React.Component{
     this.props.sendMsg({from, to, msg})
     this.setState({text:''})
   }
+  
   render(){
     const userid =this.props.match.params.user
     const Item = List.Item

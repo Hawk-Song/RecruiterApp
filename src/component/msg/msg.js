@@ -19,10 +19,15 @@ class Msg extends React.Component{
       //group coording to id
       msgGroup[v.chatid].push(v)
     });
-    const chatList = Object.values(msgGroup)
+
+    const chatList = Object.values(msgGroup).sort((a, b)=>{
+      const a_last = this.getLast(a).create_time
+      const b_last = this.getLast(b).create_time
+      return b_last - a_last
+    })
+
     return (
       <div>
-        
           {chatList.map(v=>{
             const lastItem = this.getLast(v)
             const targetId = v[0].from===userid?v[0].to:v[0].from
@@ -37,6 +42,10 @@ class Msg extends React.Component{
                 <Item 
                   extra={<Badge text={unreadNum}></Badge>}
                   thumb={require(`../img/${userinfo[targetId].avatar}.png`)}
+                  arrow='horizontal'
+                  onClick={()=>{
+                    this.props.history.push(`chat/${targetId}`)
+                  }}
                 >
                   {lastItem.content}
                   <Brief>{userinfo[targetId].name}</Brief>
@@ -44,8 +53,6 @@ class Msg extends React.Component{
               </List>
             )
           })}
-
-        
       </div>
     )
   }
