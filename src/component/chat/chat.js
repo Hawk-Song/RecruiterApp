@@ -1,7 +1,7 @@
 import React from 'react'
 import {List, InputItem, NavBar, Icon} from 'antd-mobile'
 import {connect} from 'react-redux'
-import {getMsgList, sendMsg, recvMsg} from '../../redux/chat.redux'
+import {getMsgList, sendMsg, recvMsg, readMsg} from '../../redux/chat.redux'
 import io from 'socket.io-client'
 import {getChatId} from '../../util'
 
@@ -9,7 +9,7 @@ import {getChatId} from '../../util'
 
 @connect(
   state=>state,
-  {getMsgList, sendMsg, recvMsg}
+  {getMsgList, sendMsg, recvMsg, readMsg}
 )
 class Chat extends React.Component{
   constructor(props){
@@ -28,8 +28,18 @@ class Chat extends React.Component{
       this.props.getMsgList()
       this.props.recvMsg()
     }
+    setTimeout(function(){
+      window.dispatchEvent(new Event('resize'))
+    }, 0)
+    
   }
-  
+
+  componentWillUnmount(){
+    //tell system, this message has been read
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
+  }
+
   handleSubmit(){
     //socket.emit('sendmsg', {text:this.state.text})
     this.setState({text:''})

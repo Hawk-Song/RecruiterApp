@@ -28,9 +28,15 @@
   padding-right: 15px;
   text-align: right;
 }
+.stick-footer .am-grid-icon{
+  display: none;
+}
+.stick-footer .am-grid-text{
+  margin-top: 0!important;
+}
 .stick-footer{
   z-index:10;
-  position: absolute;
+  position: auto;
   bottom:0;
   width:100%
 }
